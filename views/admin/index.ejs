@@ -1,0 +1,132 @@
+<link href="/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+<!--begin::Main-->
+<div class="d-flex flex-column flex-root">
+  <!--begin::Page-->
+  <div class="d-flex flex-row flex-column-fluid page">
+    <!--begin::Wrapper-->
+    <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+      <% include ../partials/menu_admin %>
+        <!--begin::Content-->
+        <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+          <!--begin::Entry-->
+          <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container">
+              <!--begin::Dashboard-->
+              <div class="card card-custom">
+                <!--begin::Row-->
+                <div class="row">
+                  <div class="card-body">
+                    <!--begin: Datatable-->
+                    <table id="table_id" class="table table-separate table-head-custom table-checkable"
+                      data-page-length="50">
+                      <thead style="text-align: center">
+                        <tr>
+                          <th style="width: 2%">STT</th>
+                          <th style="width: 3%">ID</th>
+                          <th style="width: 43%">Đề bài</th>
+                          <th style="width: 12%">Chủ đề</th>
+                          <th style="width: 10%">Độ khó</th>
+                          <th style="width: 10%">Công khai</th>
+                          <th>Tác vụ</th>
+                        </tr>
+                      </thead>
+                      <tbody style="text-align: center; word-wrap: break-word">
+                        <% for(var i=0; i < data.length; i++) { %>
+                          <tr>
+                            <td></td>
+                            <td>#<%= data[i].qID %>
+                            </td>
+                            <td>
+                              <latex-js>
+                                <%= data[i].name %>&ensp;
+                              </latex-js>
+                            </td>
+                            <td style="word-wrap: break-word">
+                              <%= data[i].tags %>.
+                            </td>
+                            <td>
+                              <%= data[i].difficulty %>
+                            </td>
+                            <td>
+                              <% if(data[i].isVisible===true){ %> Có <% }else{ %>
+                                  Không <% } %>
+                            </td>
+                            <% if (locals.user && locals.user.createProblem===true) { %>
+                              <td>
+                                <form method="POST" action="/admin/dlt_prob/<%= data[i].qID %>">
+                                  <a href="/admin/edit/<%= data[i].qID %>"><button type="button"
+                                      class="btn btn-success btn-sm">
+                                      Chỉnh sửa
+                                    </button></a>
+                                  <button type="submit" class="btn btn-danger btn-sm">
+                                    Xóa
+                                  </button>
+                                </form>
+                              </td>
+                              <% }else { %>
+                                <td>Bạn không thể sửa.</td>
+                                <% } %>
+                          </tr>
+                          <% } %>
+                      </tbody>
+                    </table>
+                    <!--end: Datatable-->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--end::Container-->
+          </div>
+          <!--end::Entry-->
+        </div>
+        <!--end::Content-->
+        <% include ../partials/footer %>
+    </div>
+    <!--end::Wrapper-->
+  </div>
+  <!--end::Page-->
+</div>
+<!--end::Main-->
+<script src="/plugins/custom/datatables/datatables.bundle.js"></script>
+<script type="module">
+  import { LaTeXJSComponent } from "../latex.js-0.12.4/package/dist/latex.mjs";
+  customElements.define("latex-js", LaTeXJSComponent);
+</script>
+<script>
+  $(document).ready(function () {
+    var table = $("#table_id").DataTable({
+      columnDefs: [
+        {
+          searchable: false,
+          orderable: false,
+          targets: 0,
+        },
+      ],
+      order: [[1, "asc"]],
+    });
+
+    table
+      .on("order.dt search.dt", function () {
+        table
+          .column(0, { search: "applied", order: "applied" })
+          .nodes()
+          .each(function (cell, i) {
+            cell.innerHTML = i + 1;
+          });
+      })
+      .draw();
+    var URL = window.location.href;
+    var msg = URL.split("?")[1];
+    if (msg !== "") {
+      const probCode = msg.split("_")[0];
+      const res = msg.split("_")[1];
+      if (res != "Success") {
+        window.alert("Thao tác thất bại, vui lòng kiểm tra lại");
+      } else {
+        window.alert("Thao tác thành công");
+      }
+    }
+    window.open("/admin/manage_question", "_self");
+  });
+</script>

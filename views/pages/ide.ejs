@@ -1,0 +1,211 @@
+<!--begin::Main-->
+
+<div class="d-flex flex-column flex-root">
+    <!--begin::Page-->
+    <div class="d-flex flex-row flex-column-fluid page">
+        <!--begin::Wrapper-->
+        <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+            <% include ../partials/header %>
+                <!--begin::Content-->
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    <!--begin::Entry-->
+                    <div class="d-flex flex-column-fluid">
+                        <!--begin::Container-->
+                        <div class="container">
+                            <!--begin::Dashboard-->
+                            <div class="card card-custom">
+                                <!--begin::Row-->
+                                <div class="row">
+                                    <div class="card-body">
+
+
+
+                                        <div class="container h-100 mt-4">
+
+
+                                            <div class="row mb-4 justify-content-center mx-4">
+                                                <div class="col-auto col-lg-3 col-md-4 col-sm-6">
+                                                    <div class="input-group input-group-sm" style="width: 300px;">
+                                                        <div class="input-group-prepend">
+                                                            <label class="input-group-text">Chủ đề</label>
+                                                        </div>
+                                                        <select id="theme" class="ui dropdown">
+                                                            <option value="chrome">
+                                                                Chrome
+                                                            </option>
+                                                            <option value="dracula">
+                                                                Dracula
+                                                            </option>
+                                                            <option value="tomorrow_night_blue">
+                                                                Tomorrow_night_blue
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col-auto col-lg-3 col-md-4 col-sm-6">
+                                                    <div class="input-group input-group-sm" style="width: 300px;">
+                                                        <div class="input-group-prepend">
+                                                            <label class="input-group-text">Ngôn ngữ</label>
+                                                        </div>
+                                                        <select id="language" class="ui dropdown">
+                                                            <% for (var i=0; i<langlist.length; i++) { %>
+                                                                <option value="<%= langlist[i].id %>">
+                                                                    <%= langlist[i].name %>
+                                                                </option>
+                                                                <% } %>
+
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row mb-4">
+                                                <div class="col">
+                                                    <div class="border-gray border-bottom border-right" id="editor">
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row mb-4 justify-content-center mx-4">
+                                                <div class="col-4 col-lg-2 col-md-3 col-sm-4 w-75">
+                                                    <button type="button" id="submit-btn"
+                                                        class="btn btn-primary btn-lg btn-block px-4 mx-2">
+                                                        Gửi bài
+                                                    </button>
+                                                </div>
+
+                                                <div class="col-8 col-lg-2 col-md-3 col-sm-4 w-75">
+                                                    <div id="time-memo"></div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row mb-4 ">
+
+                                                <div class="ide-output row">
+                                                    <div class="col-md-6 col-xs-12">
+                                                        <div class="label-box border"><span
+                                                                class="mx-4 font-weight-light">Đầu vào</span></div>
+                                                        <textarea class="form-control input" id="stdin"
+                                                            rows="8"></textarea>
+                                                    </div>
+                                                    <div class="col-md-6 col-xs-12">
+                                                        <div class="label-box border"><span
+                                                                class="mx-4 font-weight-light">Đầu ra</span></div>
+                                                        <textarea class="form-control output" id="stdout" rows="8"
+                                                            readonly></textarea>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!--end::Container-->
+                    </div>
+                    <!--end::Entry-->
+                </div>
+                <!--end::Content-->
+                <% include ../partials/footer %>
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <!--end::Page-->
+</div>
+<!--end::Main-->
+
+
+
+<% include ../partials/script %>
+
+    <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/js/script.js"></script>
+
+    <script src="/js/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/chrome");
+        editor.session.setMode("ace/mode/c_cpp");
+        editor.setFontSize("16px");
+        $("#language").change(function () {
+            var lang_enum = $(this).val();
+            switch (lang_enum) {
+                case 62:
+                    editor.getSession().setMode("ace/mode/java");
+                    break;
+                case 63:
+                    editor.getSession().setMode("ace/mode/javascript");
+                    break;
+                case 67:
+                    editor.getSession().setMode("ace/mode/pascal");
+                    break;
+                case 71:
+                    editor.getSession().setMode("ace/mode/python");
+                    break;
+                default:
+                    editor.getSession().setMode("ace/mode/c_cpp");
+                    break;
+            }
+        });
+        $("#theme").change(function () {
+            var theme = $(this).val();
+            editor.setTheme(`ace/theme/${theme}`);
+
+        })
+    </script>
+    <script src="/js/handlebars.js"></script>
+    <script>
+
+
+        $('#submit-btn').on('click', function () {
+            if (editor.getValue().trim() === "") {
+                alert("Source code can't be empty!");
+                return;
+            }
+
+            $('#submit-btn').html('<i class="fa fa-spinner fa-spin"></i>');
+            $('#submit-btn').prop('disabled', true);
+            data = {
+                src: editor.getValue(),
+                lang: $('#language').val(),
+                stdin: $('#stdin').val()
+            };
+
+            $.ajax('/ide', {
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                type: 'POST'
+            }).done(function (res) {
+                if (res.status.id !== 3) {
+                    $('#stdout').css('color', 'red');
+                    if (res.compile_output == null) {
+                        $('#stdout').val(res.status.description);
+                    }
+                    else {
+                        $('#stdout').val(atob(res.compile_output) + '\n' + res.status.description);
+                    }
+                } else {
+                    $('#stdout').css('color', 'black');
+                    $('#stdout').val(atob(res.stdout));
+                    document.getElementById('time-memo').innerHTML = "Used: " + res.time + " s, " + res.memory + " KB";
+                }
+                $('#submit-btn').html('Submit')
+                $('#submit-btn').prop('disabled', false);
+            });
+
+
+        });
+
+    </script>

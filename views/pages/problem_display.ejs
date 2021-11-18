@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/sheet.css">
+    <link rel="stylesheet" href="/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/grid.css">
+    <link rel="stylesheet" type="text/css" href="/css/problem_display.css">
+    <title><%= data.qID %>-<%= data.name %> | CodeRace</title>
+    <script type="module">
+        import { LaTeXJSComponent } from "/js/latex.js"
+        customElements.define("latex-js", LaTeXJSComponent)
+      </script>
+      <% include partials/head %>
+
+</head>
+
+<body>
+    <header>
+        <% include partials/header %>
+    </header>
+    <div class="grid-content content">
+        <div class="box">
+            <div class="title">
+                <%= data.qID %>.<%= data.name %>
+            </div>
+            <div class="sub-title">
+                TG giới hạn: <%= data.timeLimit %> seconds<br>
+                Giới hạn bộ nhớ: <%= data.memoryLimit %> KB<br>
+                Người ra đề: <%= data.problemSetter %><br>
+                Độ khó: <%= data.difficulty %> / 5<br>
+                Tags: <%= data.tags %><br>
+                Biên tập: link
+            </div>
+            <hr>
+            <div class="problem-body">
+                <%= data.description %>
+                <br>
+                
+                <h2>Input</h2>
+                <p style="font-size:20px"><%= data.inputFormat %></p>
+                <h2>Output</h2>
+                <p><%= data.outputFormat %></p>
+                <h2>Giải thích:</h2>
+                <p><%= data.explanation %></p>
+            </div>
+            <form method="POST" action="">
+                <input type="submit" value="Submit" class="button is-link">
+            </form>
+        </div>
+    </div>
+    <footer>
+        <% include partials/footer %>
+    </footer>
+    
+</body>
+
+</html>

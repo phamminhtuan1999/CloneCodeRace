@@ -1,0 +1,133 @@
+<link href="/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+<!--begin::Main-->
+<% include ../partials/header-mobile %>
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Page-->
+        <div class="d-flex flex-row flex-column-fluid page">
+            <!--begin::Wrapper-->
+            <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+                <% include ../partials/header %>
+                    <!--begin::Content-->
+                    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                        <!--begin::Entry-->
+                        <div class="d-flex flex-column-fluid">
+                            <!--begin::Container-->
+                            <div class="container">
+                                <!--begin::Dashboard-->
+                                <div class="card card-custom">
+                                    <!--begin::Row-->
+                                    <div class="row">
+                                        <div class="card-body">
+                                            <!--begin: Datatable-->
+                                            <div class="datatable datatable-bordered datatable-head-custom"
+                                                id="mytable"></div>
+                                            <!--end: Datatable-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Container-->
+                        </div>
+                        <!--end::Entry-->
+                    </div>
+                    <!--end::Content-->
+                    <% include ../partials/footer %>
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Page-->
+    </div>
+    <!--end::Main-->
+    <% include ../partials/scripts %>
+        <script src="/plugins/custom/datatables/datatables.bundle.js"></script>
+        <script src="/js/pages/crud/datatables/extensions/responsive.js"></script>
+        <script type="module">
+            import { LaTeXJSComponent } from "/latex.js-0.12.4/package/dist/latex.mjs";
+            customElements.define("latex-js", LaTeXJSComponent);
+        </script>
+        <script>
+            var KTDatatable = {
+                pages: 1,
+
+                init: function () {
+                    KTDatatable.initData();
+                },
+
+                initData: function () {
+                    var datatable = $('#mytable').KTDatatable({
+                        // datasource definition
+                        data: {
+                            type: 'remote',
+                            source: {
+                                read: {
+                                    method: 'POST',
+                                    url: '/getproblems',
+                                    params: {
+                                        pages: 1,
+                                    }
+                                },
+                            },
+                            pageSize: 10, // display 10 records per page
+                            serverPaging: true,
+                            serverFiltering: false,
+                            serverSorting: false,
+                        },
+
+                        // layout definition
+                        layout: {
+                            scroll: true,
+                            footer: false,
+                            // enable/disable datatable spinner.
+                            spinner: {
+                                type: 1,
+                                theme: 'default',
+                            },
+                        },
+
+                        // column sorting
+                        sortable: true,
+                        pagination: true,
+
+                        // columns definition
+                        columns: [
+                            {
+                                field: 'qID',
+                                title: '#',
+                                sortable: 'asc',
+                                width: 50,
+                                textAlign: 'center',
+                            }, {
+                                field: 'name',
+                                title: 'First Name',
+                                width: 500,
+                                textAlign: 'center',
+                                template: function (row) { return '<latex-js>' + row.name + '</latex-js>' }
+                            }, {
+                                field: 'tags',
+                                title: 'Tags',
+                                width: 200,
+                                textAlign: 'center',
+                                autoHide: 'true',
+                                responsive: { visible: 'md', hidden: 'sm' },
+                                template: function (row) {
+                                    var result = '';
+                                    row.tags.forEach(a => {
+                                        Object.keys(a).map(function (key) { result += '<span class="label label-light-primary label-inline label-bold mr-1">' + a[key] + '</span>'; });
+                                    });
+                                    return result;
+                                }
+                            }, {
+                                field: 'difficulty',
+                                title: 'Address',
+                                width: 100,
+                                textAlign: 'center',
+                                autoHide: 'true',
+                                responsive: { visible: 'lg', hidden: 'md' }
+                            },],
+                    });
+                }
+            }
+            jQuery(document).ready(function () {
+                KTDatatable.init();
+            });
+        </script>

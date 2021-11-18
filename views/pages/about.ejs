@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<% include partials/head %>
+
+	<title>Chào mừng tới CodeRace</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/css/sheet.css">
+	<link rel="stylesheet" type="text/css" href="/css/grid.css">
+	<link rel="stylesheet" type="text/css" href="/js/bootstrap.bundle.min.js">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/js/jquery.slim.min.js">
+	<link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+</head>
+
+<body>
+	<header>
+		<% include partials/header %>
+	</header>
+  
+  <!-- Page Content -->
+  <div class="container"></div>
+	<div class="row">
+	  <!-- Team Member 1 -->
+	  <div class="col-xl-3 col-md-6 mb-4">
+		<div class="card border-0 shadow">
+		  <img src="./photos/dang.jpg" class="card-img-top" alt="...">
+		  <div class="card-body text-center">
+			<h5 class="card-title mb-0">Team Member</h5>
+			<span style="font-size: 13px;">Lê Hải Đăng</span>
+			<div class="card-text text-black-50">Web Developer</div>
+		  </div>
+		</div>
+	  </div>
+	  <!-- Team Member 2 -->
+	  <div class="col-xl-3 col-md-6 mb-4">
+		<div class="card border-0 shadow">
+		  <img src="./photos/Tien.jpg" class="card-img-top" alt="..." >
+		  <div class="card-body text-center">
+			<h5 class="card-title mb-0">Team Member</h5>
+			<span style="font-size: 13px;">Nguyễn Thịnh Tiến</span>
+			<div class="card-text text-black-50">Web Developer</div>
+		  </div>
+		</div>
+	  </div>
+	  <!-- Team Member 3 -->
+	  <div class="col-xl-3 col-md-6 mb-4">
+		<div class="card border-0 shadow">
+		  <img src="./photos/tuan.jpg" class="card-img-top" alt="...">
+		  <div class="card-body text-center">
+			<h5 class="card-title mb-0">Team Member</h5>
+			<span style="font-size: 13px;">Phạm Minh Tuấn</span>
+			<div class="card-text text-black-50">Web Developer</div>
+		  </div>
+		</div>
+	  </div>
+	  <!-- Team Member 4 -->
+	  <div class="col-xl-3 col-md-6 mb-4">
+		<div class="card border-0 shadow">
+		  <img src="./photos/phuc.jpg" class="card-img-top" alt="...">
+		  <div class="card-body text-center">
+			<h5 class="card-title mb-0">Team Member</h5>
+			<span style="font-size: 13px;">Trần Mai Trường Phúc</span>
+			<div class="card-text text-black-50">Web Developer</div>
+		  </div>
+		</div>
+	  </div>
+	<h1 style="text-align: center; margin: auto;">Chúng tôi là DP2T TEAM</h1>
+	</div>
+	<!-- /.row -->
+  
+
+  <!-- /.container -->
+	<footer>
+		<% include partials/footer %>
+	</footer>
+</body>
+<script>
+	var slideIndex = 1;
+	showSlides(slideIndex);
+	function plusSlides(n) {
+		showSlides(slideIndex += n);
+	}
+	function currentSlide(n) {
+		showSlides(slideIndex = n);
+	}
+	function showSlides(n) {
+		var i;
+		var slides = document.getElementsByClassName("mySlides");
+		var dots = document.getElementsByClassName("dot");
+		if (n > slides.length) {
+			slideIndex = 1
+		}
+		if (n < 1) {
+			slideIndex = slides.length
+		}
+		for (i = 0; i < slides.length; i++) {
+			slides[i].style.display = "none";
+		}
+		for (i = 0; i < dots.length; i++) {
+			dots[i].className = dots[i].className.replace(" active", "");
+		}
+		slides[slideIndex - 1].style.display = "block";
+		dots[slideIndex - 1].className += " active";
+	}
+</script>
+<script>
+	var URL = window.location.href;
+	if (URL.search("msg=") != -1) {
+		var message = URL.split("msg=")[1];
+		message = message.replace(/-/g, " ");
+		window.alert(message);
+	}
+</script>
+
+</html>

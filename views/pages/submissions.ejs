@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+	<!--begin::Head-->
+	<head>
+		<title>DP2T</title>
+
+		<link rel="stylesheet" type="text/css" href="/css/profile.css">
+		<script src="/js/jquery-3.3.1.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/jquery.dataTables.min.css">
+		<link href="/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+
+		<% include partials/head %>
+
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" style="background-image: url(/media/bg/bg-10.jpg)" class="quick-panel-right demo-panel-right offcanvas-right header-fixed subheader-enabled page-loading">
+		<!--begin::Main-->
+
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Page-->
+			<div class="d-flex flex-row flex-column-fluid page">
+				<!--begin::Wrapper-->
+				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+		        <% include partials/header %>
+                	 <!--begin::Content-->
+            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                <!--begin::Subheader-->
+                <div class="subheader py-2 py-lg-12 subheader-transparent" id="kt_subheader">
+                    <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                        <!--begin::Info-->
+                        <div class="d-flex align-items-center flex-wrap mr-1">
+                            <!--begin::Mobile Toggle-->
+                            <button class="burger-icon burger-icon-left mr-4 d-inline-block d-lg-none" id="kt_subheader_mobile_toggle">
+                                <span></span>
+                            </button>
+                            <!--end::Mobile Toggle-->
+                            <!--begin::Heading-->
+                            <div class="d-flex flex-column">
+                                <!--begin::Title-->
+                                <h2 class="text-white font-weight-bold my-2 mr-5">Thông tin người dùng</h2>
+                                <!--end::Title-->
+                                <!--begin::Breadcrumb-->
+                               
+                                <!--end::Breadcrumb-->
+                            </div>
+                            <!--end::Heading-->
+                        </div>
+                        <!--end::Info-->
+                        
+                    </div>
+                </div>
+                <!--end::Subheader-->
+                <!--begin::Entry-->
+                <div class="d-flex flex-column-fluid">
+                    <!--begin::Container-->
+                    <div class="container">
+                        <!--begin::Profile Overview-->
+                        <div class="d-flex flex-row">
+                            <!--begin::Aside-->
+                            <div class="flex-row-auto offcanvas-mobile w-300px w-xl-350px" id="kt_profile_aside">
+                                <!--begin::Profile Card-->
+                                <div class="card card-custom card-stretch">
+                                    <!--begin::Body-->
+                                    <div class="card-body pt-4" style="height: 550px;">
+                                        
+                                        <!--begin::User-->
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
+                                                <div class="symbol-label" style="background-image:url('/media/users/300_21.jpg')"></div>
+                                                <i class="symbol-badge bg-success"></i>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"><%= locals.user.name %></a>
+                                                <div class="text-muted">Application Developer</div>
+                                                
+                                            </div>
+                                        </div>
+                                        <!--end::User-->
+                                        <!--begin::Contact-->
+                                        <div class="py-9">
+											<div class="d-flex align-items-center justify-content-between mb-2">
+                                                <span class="font-weight-bold mr-2">Tên tài khoản:</span>
+                                                <a href="#" class="text-muted text-hover-primary"><%= locals.user.username %></a>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                                <span class="font-weight-bold mr-2">Email:</span>
+                                                <a href="#" class="text-muted text-hover-primary"><%= locals.user.email %></a>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-between  mb-2">
+                                                <span class="font-weight-bold mr-2">Quyền quản trị:</span>
+                                                <% if(locals.user.isAdmin==true && locals.user.isTeacher==false){ %> 
+                                                    <span class="text-muted">True</span>
+                                                <% }else{ %> 
+                                                    <span class="text-muted">False</span>
+                                                <% } %>     
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <span class="font-weight-bold mr-2">Quyền giảng viên:</span>
+                                                <% if(locals.user.isAdmin==true && locals.user.isTeacher==true){ %> 
+                                                    <span class="text-muted">True</span>
+                                                <% }else if(locals.user.isAdmin==true && locals.user.isTeacher==false){ %> 
+                                                    <span class="text-muted">True</span>
+                                                <% }else{ %>
+                                                    <span class="text-muted">False</span> 
+                                                <% } %> 
+                                            </div>
+                                        </div>
+                                        <!--end::Contact-->
+                                        <!--begin::Nav-->
+                                        <div class="navi navi-bold navi-hover navi-active navi-link-rounded" >                                           
+                                            <div class="navi-item mb-2">
+                                                <a href="/user/submissions" class="navi-link py-4" data-toggle="tooltip" data-placement="right">
+                                                    <span class="navi-icon mr-2">
+                                                        <span class="svg-icon">
+                                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Files/File.svg-->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                                    <path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                                    <rect fill="#000000" x="6" y="11" width="9" height="2" rx="1" />
+                                                                    <rect fill="#000000" x="6" y="15" width="5" height="2" rx="1" />
+                                                                </g>
+                                                            </svg>
+                                                            <!--end::Svg Icon-->
+                                                        </span>
+                                                    </span>
+                                                    <span class="navi-text font-size-lg">Lịch sử làm bài</span>
+                                                    <span class="navi-label">
+                                                        <span class="label label-light-primary label-inline font-weight-bold">new</span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="navi-item mb-2">
+                                                <a href="/user/updateProfile" class="navi-link py-4" data-toggle="tooltip"  data-placement="right">
+                                                    <span class="navi-icon mr-2">
+                                                        <span class="svg-icon">
+                                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Text/Article.svg-->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                    <rect x="0" y="0" width="24" height="24" />
+                                                                    <rect fill="#000000" x="4" y="5" width="16" height="3" rx="1.5" />
+                                                                    <path d="M5.5,15 L18.5,15 C19.3284271,15 20,15.6715729 20,16.5 C20,17.3284271 19.3284271,18 18.5,18 L5.5,18 C4.67157288,18 4,17.3284271 4,16.5 C4,15.6715729 4.67157288,15 5.5,15 Z M5.5,10 L12.5,10 C13.3284271,10 14,10.6715729 14,11.5 C14,12.3284271 13.3284271,13 12.5,13 L5.5,13 C4.67157288,13 4,12.3284271 4,11.5 C4,10.6715729 4.67157288,10 5.5,10 Z" fill="#000000" opacity="0.3" />
+                                                                </g>
+                                                            </svg>
+                                                            <!--end::Svg Icon-->
+                                                        </span>
+                                                    </span>
+                                                    <span class="navi-text">Thay đổi thông tin</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <!--end::Nav-->
+                                    </div>
+                                    <!--end::Body-->
+                                </div>
+                                <!--end::Profile Card-->
+                            </div>
+                            <!--end::Aside-->
+                            <!--begin::Content-->
+                            <div class="flex-row-fluid ml-lg-8">                            
+                                <!--begin::Advance Table: Widget 7-->
+
+                                    <div class="card-header border-0 pt-4" >
+
+                                       <!--begin: Datatable-->
+									  	<table id="table_id" class="table table-separate table-head-custom table-checkable" data-page-length="10">
+										<thead style="text-align:center">
+											<tr>
+												<th style="width:5%">STT</th>
+												<th style="width:30%">Ngày</th>
+												<th style="width:5%">ID</th>
+												<th style="width:10%">Ngôn ngữ</th>
+												<th style="width:10%">Trạng thái</th>
+												<th style="width:10%">Thời gian</th>
+                                                <th style="width:10%">Bộ nhớ</th>
+                                                <th style="width:10%"></th>
+											</tr>
+										</thead>
+										<tbody id="show-all-contests">
+											<% for(var i = 0; i < data.length; i++) { %>
+											<tr>
+												<td>
+													<a href="/user/submission/<%= data[i].subID %>"><%= data[i].subID %></a>
+												</td>
+												<td>
+													<%= data[i].date %>
+												</td>
+												<td>
+													<a href="/problem/<%=data[i].qID%>" target="_blank">
+														<%= data[i].qID %></a>
+												</td>
+												<td>
+													<%= data[i].language %>
+												</td>
+												<td>
+													<span style="color: darkblue">
+														<% if(data[i].verdict === "Accepted") { %>
+														<strong style="color:rgb(38, 134, 0);">
+															<% } %>
+															<%= data[i].verdict %>
+															<% if(data[i].verdict === "Accepted") { %>
+														</strong>
+														<% } %>
+													</span>
+												</td>
+												<td>
+													<%= data[i].time %> s
+												</td>
+												<td>
+													<%= data[i].memory %> KB
+                                                </td>
+                                                <td>
+                                                    <a href="/user/submission/<%= data[i].subID %>"><button type="submit" class="btn btn-light-primary mr-2">Chi tiết</button></a>
+												</td>
+											</tr>
+											<% } %>
+										</tbody>
+										</table>
+										<!--end: Datatable-->
+                                    </div>
+                                    <!--end::Header-->
+                                    <!--begin::Body-->
+                                    <div class="card-body pt-2 pb-0 mt-n3">
+                                        <div class="tab-content mt-5" id="myTabTables12">
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                    <!--end::Body-->
+
+                            </div>
+                            <!--end::Content-->
+                        </div>
+                        <!--end::Profile Overview-->
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Entry-->
+            </div>
+            <!--end::Content-->
+				<% include partials/footer %>
+			</div>
+			<!--end::Wrapper-->
+		</div>
+			<!--end::Page-->
+	</div>
+    <!--end::Main-->
+  
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop">
+    <span class="svg-icon">
+    <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Up-2.svg-->
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <polygon points="0 0 24 0 24 24 0 24" />
+            <rect fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1" />
+            <path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z" fill="#000000" fill-rule="nonzero" />
+        </g>
+    </svg>
+    <!--end::Svg Icon-->
+    </span>
+    </div>
+    <!--end::Scrolltop-->
+    
+    <% include partials/script %>
+
+
+	<script type="text/javascript" src="/js/datatables.min.js"></script>
+
+	<script src="/plugins/custom/datatables/datatables.bundle.js"></script>
+	<!--end::Page Vendors-->
+	<!--begin::Page Scripts(used by this page)-->
+	<script src="/js/pages/crud/datatables/basic/headers.js"></script>
+	<script>
+		$(document).ready( function () {
+			   $('#table_id').DataTable();
+		} );
+	</script>
+    <!--end::Page Scripts-->
+    </body>
+    <!--end::Body-->
+    </html>

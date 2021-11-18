@@ -1,0 +1,164 @@
+<!--begin::Header-->
+<div id="kt_header" class="header header-fixed">
+  <!--begin::Container-->
+  <div class="container d-flex align-items-stretch justify-content-between">
+    <!--begin::Left-->
+    <div class="d-flex align-items-stretch mr-3">
+      <!--begin::Header Logo-->
+      <div class="header-logo">
+        <a href="#">
+          <img
+            alt="Logo"
+            src="/photos/favicon.png"
+            class="logo-default max-h-70px"
+          />
+        </a>
+      </div>
+      <!--end::Header Logo-->
+      <!--begin::Header Menu Wrapper-->
+      <div
+        class="header-menu-wrapper header-menu-wrapper-left"
+        id="kt_header_menu_wrapper"
+      >
+        <!--begin::Header Menu-->
+        <div
+          id="kt_header_menu"
+          class="
+            header-menu
+            header-menu-left
+            header-menu-mobile
+            header-menu-layout-default
+          "
+        >
+          <!--begin::Header Nav-->
+          <ul class="menu-nav">
+            <li class="menu-item menu-item-rel" aria-haspopup="true">
+              <a href="/admin/manage_question" class="menu-link">
+                <span class="menu-text">Quản lý bài tập</span>
+                <i class="menu-arrow"></i>
+              </a>
+            </li>
+            <% if (locals.user && locals.user.createContest === true) { %>
+            <li class="menu-item menu-item-rel" aria-haspopup="true">
+              <a href="/admin/my-contests" class="menu-link">
+                <span class="menu-text">Quản lý cuộc thi</span>
+                <i class="menu-arrow"></i>
+              </a>
+            </li>
+            <% } %>
+
+            <li class="menu-item menu-item-rel" aria-haspopup="true">
+              <a href="/admin/viewfileadmin" class="menu-link">
+                <span class="menu-text">Quản lý tài liệu</span>
+                <i class="menu-arrow"></i>
+              </a>
+            </li>
+            <li class="menu-item menu-item-rel" aria-haspopup="true">
+              <a href="/admin/manageTags" class="menu-link">
+                <span class="menu-text">Quản lý chủ đề</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+              </a>
+            </li>
+
+            <% if (locals.user && locals.user.isTeacher === false) { %>
+
+            <li class="menu-item menu-item-rel" aria-haspopup="true">
+              <a href="/admin/create_subjects" class="menu-link">
+                <span class="menu-text">Quản lý môn học</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+              </a>
+            </li>
+            <li class="menu-item menu-item-rel" aria-haspopup="true">
+              <a href="/admin/manage-admins" class="menu-link">
+                <span class="menu-text">Quyền quản trị</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+              </a>
+            </li>
+
+            <% } %>
+          </ul>
+          <!--end::Header Nav-->
+        </div>
+        <!--end::Header Menu-->
+      </div>
+      <!--end::Header Menu Wrapper-->
+    </div>
+    <!--end::Left-->
+    <!--begin::Topbar-->
+    <div class="topbar">
+      <!--begin::Admin-->
+      <div class="dropdown">
+        <!--begin::Toggle-->
+        <div class="topbar-item">
+          <div
+            class="
+              btn btn-icon btn-hover-transparent-white
+              d-flex
+              align-items-center
+              btn-lg
+              px-md-2
+              w-md-auto
+            "
+          >
+            <a href="/" class="menu-link">
+              <span class="menu-text text-white">Trở lại trang người dùng</span>
+              <span class="menu-desc"></span>
+              <i class="menu-arrow"></i>
+            </a>
+          </div>
+        </div>
+        <!--end::Toggle-->
+      </div>
+      <!--end::Admin-->
+
+      <!--end::Languages-->
+      <!--begin::User-->
+      <div class="dropdown">
+        <!--begin::Toggle-->
+        <div class="topbar-item">
+          <div
+            class="
+              btn btn-icon btn-hover-transparent-white
+              d-flex
+              align-items-center
+              btn-lg
+              px-md-2
+              w-md-auto
+            "
+            id="kt_quick_user_toggle"
+          >
+            <span
+              class="
+                text-white
+                opacity-70
+                font-weight-bold font-size-base
+                d-none d-md-inline
+                mr-1
+              "
+              >Xin chào,</span
+            >
+            <span
+              class="
+                text-white
+                opacity-90
+                font-weight-bolder font-size-base
+                d-none d-md-inline
+                mr-4
+              "
+              ><%= locals.user.name %></span
+            >
+          </div>
+        </div>
+        <!--end::Toggle-->
+      </div>
+      <!--end::User-->
+      <% include user_pannel %>
+    </div>
+    <!--end::Topbar-->
+  </div>
+  <!--end::Container-->
+</div>
+<!--end::Header-->

@@ -1,0 +1,225 @@
+<!--begin::Header-->
+<div id="kt_header" class="header header-fixed">
+  <!--begin::Container-->
+  <div class="container d-flex align-items-stretch justify-content-between">
+    <!--begin::Left-->
+    <div class="d-flex align-items-stretch mr-3">
+      <!--begin::Header Logo-->
+      <div class="header-logo">
+        <a href="/">
+          <img alt="Logo" src="/photos/favicon.png" class="logo-default max-h-70px" />
+        </a>
+      </div>
+      <!--end::Header Logo-->
+      <!--begin::Header Menu Wrapper-->
+      <div class="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
+        <!--begin::Header Menu-->
+        <div id="kt_header_menu" class="header-menu header-menu-left header-menu-mobile header-menu-layout-default">
+          <!--begin::Header Nav-->
+          <ul class="menu-nav">
+            <li class="menu-item menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+              <a href="/" class="menu-link">
+                <span class="menu-text">Trang chủ</span>
+                <i class="menu-arrow"></i>
+              </a>
+            </li>
+            <li class="menu-item menu-item-rel" aria-haspopup="true">
+              <a href="/problems/all" class="menu-link">
+                <span class="menu-text">Bài tập</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+              </a>
+            </li>
+            <li class="menu-item menu-item-rel" aria-haspopup="true">
+              <a href="/choose_subjects" class="menu-link">
+                <span class="menu-text">Làm bài theo môn học</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+              </a>
+            </li>
+            <li class="menu-item menu-item-rel" aria-haspopup="true">
+              <a href="/contests" class="menu-link">
+                <span class="menu-text">Cuộc thi</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+              </a>
+            </li>
+            <li class="menu-item menu-item-rel" aria-haspopup="true">
+              <a href="/rankings" class="menu-link">
+                <span class="menu-text">Xếp Hạng</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+              </a>
+            </li>
+            <li class="menu-item menu-item-rel" aria-haspopup="true">
+              <a href="/ide" class="menu-link">
+                <span class="menu-text">Biên dịch</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+              </a>
+            </li>
+            <li class="menu-item menu-item-rel" aria-haspopup="true">
+              <a href="/viewfileuser" class="menu-link">
+                <span class="menu-text">Tài liệu</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+              </a>
+            </li>
+          </ul>
+          <!--end::Header Nav-->
+        </div>
+        <!--end::Header Menu-->
+      </div>
+      <!--end::Header Menu Wrapper-->
+    </div>
+    <!--end::Left-->
+    <!--begin::Topbar-->
+    <div class="topbar">
+      <!--begin::Admin-->
+
+      <% if (locals.user && locals.user.isAdmin===true) { %>
+        <div class="dropdown">
+          <!--begin::Toggle-->
+          <div class="topbar-item">
+            <div class="btn btn-icon btn-hover-transparent-white d-flex align-items-center btn-lg px-md-2 w-md-auto">
+              <a href="/admin/manage-questions/1" class="menu-link">
+                <span class="menu-text text-white">Admin</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+              </a>
+            </div>
+          </div>
+          <!--end::Toggle-->
+        </div>
+        <% } %>
+          <% if (locals.user) { %>
+            <!--end::Admin-->
+
+            <!--end::Languages-->
+            <!--begin::User-->
+            <div class="dropdown">
+              <!--begin::Toggle-->
+              <div class="topbar-item">
+                <div class="btn btn-icon btn-hover-transparent-white d-flex align-items-center btn-lg px-md-2 w-md-auto"
+                  id="kt_quick_user_toggle">
+                  <span class="text-white opacity-70 font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
+                  <span class="text-white opacity-90 font-weight-bolder font-size-base d-none d-md-inline mr-4">
+                    <%= locals.user.username %>
+                  </span>
+                </div>
+              </div>
+              <!--end::Toggle-->
+            </div>
+            <!--end::User-->
+            <% include user_pannel %>
+              <% } else { %>
+                <div class="topbar-item">
+                  <div
+                    class="btn btn-icon btn-hover-transparent-white d-flex align-items-center btn-lg px-md-2 w-md-auto"
+                    data-toggle="modal" data-target="#loginModal">
+                    Đăng nhập
+                  </div>
+                </div>
+                <div class="topbar-item">
+                  <div
+                    class="btn btn-icon btn-hover-transparent-white d-flex align-items-center btn-lg px-md-2 w-md-auto"
+                    data-toggle="modal" data-target="#signupModal">
+                    Đăng ký
+                  </div>
+                </div>
+
+                <% } %>
+    </div>
+    <!--end::Topbar-->
+  </div>
+  <!--end::Container-->
+</div>
+<!--end::Header-->
+<!-- LOGIN FORM -->
+
+<!-- Login Modal-->
+<div class="modal fade" id="loginModal" data-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="staticBackdrop" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Đăng nhập</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i aria-hidden="true" class="ki ki-close"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/user/login" method="post" class="form-signin" id="loginform">
+          <div class="form-group">
+            <label for="username" class="sr-only">Tài khoản</label>
+            <input type="text" name="username" id="inputEmailSignIn" class="form-control" placeholder="Username"
+              required autofocus />
+          </div>
+          <div class="form-group">
+            <label for="inputPasswordSignIn" class="sr-only">Mật khẩu</label>
+            <input type="password" name="password" id="inputPasswordSignIn" class="form-control" placeholder="Password"
+              required />
+          </div>
+          <input type="submit" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
+            value="Đăng nhập" />
+          <hr class="my-4" />
+          <p class="mt-5 mb-3 text-muted">
+            Bạn không có tài khoản?<a data-toggle="modal" href="#signupModal"> Đăng ký ngay!!!</a>
+          </p>
+          <label id="errormsg" class="errmsg"></label>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNUP FORM -->
+<div class="modal fade" id="signupModal" data-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="staticBackdrop" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Đăng ký</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i aria-hidden="true" class="ki ki-close"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/user/signup" method="post" class="form-signin" id="signupform">
+          <div class="form-group">
+            <label for="name" class="sr-only">Tài khoản</label>
+            <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required
+              autofocus />
+          </div>
+          <div class="form-group">
+            <label for="name" class="sr-only">Tên người dùng</label>
+            <input type="text" name="name" id="inputName" class="form-control" placeholder="Name" required autofocus />
+          </div>
+          <div class="form-group">
+            <label for="email" class="sr-only">Email</label>
+            <input type="email" name="email" id="inputEmailSignUp" class="form-control" placeholder="Email" required
+              autofocus />
+          </div>
+          <div class="form-group">
+            <label for="inputPasswordSignIn" class="sr-only">Mật khẩu</label>
+            <input type="password" name="password" id="inputPasswordSignIn" class="form-control" placeholder="Password"
+              required />
+          </div>
+          <div class="form-group">
+            <label for="inputPasswordSignUp" class="sr-only">Xác nhận mật khẩu</label>
+            <input type="password" name="password2" id="inputPasswordSignUp2" class="form-control"
+              placeholder="Confirm Password" required />
+          </div>
+
+          <input type="submit" name="" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
+            value="Đăng ký" />
+          <p class="mt-5 mb-3 text-muted">
+            Bạn đã có tài khoản?
+            <a class="close-modal" data-toggle="modal" href="#loginModal"> Đăng nhập ngay!</a>
+          </p>
+          <label id="errormsg2" class="errmsg"></label>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
